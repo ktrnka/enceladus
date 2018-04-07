@@ -1,0 +1,11 @@
+#doctor {
+    display: none;
+    width: 100%;
+    text-align: left;
+}
+
+#patient {
+    display: none;
+    width: 100%;
+    text-align: right;
+}
