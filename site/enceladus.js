@@ -1,3 +1,5 @@
+
+
 // mapping the speaker names to SpeechSynthesisUtterance configuration
 const speechConfigs = {
     doctor: function (utterance) {
@@ -80,6 +82,15 @@ function waitForVoices(func_callback) {
             waitForVoices(func_callback);
         }
     }, 500);
+}
+
+// this function seems to bug out Chrome so bad that I have to reboot
+function pauseSpeechFor(millis) {
+    window.speechSynthesis.pause();
+
+    setTimeout(() => {
+        window.speechSynthesis.resume();
+    }, millis);
 }
 
 /** MAIN READER **/
