@@ -1,19 +1,3 @@
-// cache DOM lookups
-const DOM = {
-    patient_div: $('#patient'),
-    doctor_div: $('#doctor')
-};
-
-// simple script to read from
-const script = [
-    {speaker: 'doctor', text: 'What brings you here today?'},
-    {speaker: 'patient', text: 'I haven\'t been sleeping too well and my head hurts.'},
-    {speaker: 'doctor', text: 'Oh I\'m sorry to hear that. How long has this been going on?'},
-    {speaker: 'patient', text: 'A few weeks now'},
-    {speaker: 'doctor', text: 'Could you describe the headaches a bit for me?'},
-    {speaker: 'patient', text: 'They\'re like a dull ache you know? Sort of always there and just like that, like usually it feels that way when I don\'t sleep well'}
-];
-
 // mapping the speaker names to SpeechSynthesisUtterance configuration
 const speechConfigs = {
     doctor: function (utterance) {
@@ -38,7 +22,7 @@ const speechConfigs = {
             $('#patient').hide();
         });
     }
-}
+};
 
 // utterances must be stored in globals so that the callbacks aren't garbage collected before they're spoken
 window.utterances = [];
@@ -68,8 +52,10 @@ function buildUtterances(messages) {
 
 function startReading() {
     console.log("Starting to read");
-    buildUtterances(script);
-    $.each(window.utterances, function(i, utterance) { speechSynthesis.speak(utterance); });
+    $.getJSON('./scripts/demo_script.json', function(data) {
+        buildUtterances(data);
+        $.each(window.utterances, function(i, utterance) { speechSynthesis.speak(utterance); });
+    });
 }
 
 
