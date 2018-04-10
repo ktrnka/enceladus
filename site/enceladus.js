@@ -82,14 +82,6 @@ function waitForVoices(func_callback) {
     }, 500);
 }
 
-// this function seems to bug out Chrome so bad that I have to reboot
-function pauseSpeechFor(millis) {
-    window.speechSynthesis.pause();
-
-    setTimeout(() => {
-        window.speechSynthesis.resume();
-    }, millis);
-}
 
 /** MAIN READER **/
 
@@ -106,3 +98,14 @@ function main() {
 $('document').ready(() => {
     waitForVoices(() => { main(); });
 });
+
+
+/** UNUSED **/
+// this function seems to bug out Chrome so bad that I have to reboot
+function pauseSpeechFor(millis) {
+    window.speechSynthesis.pause();
+
+    setTimeout(() => {
+        window.speechSynthesis.resume();
+    }, millis);
+}
