@@ -2,25 +2,25 @@
 
 // mapping the speaker names to SpeechSynthesisUtterance configuration
 const speechConfigs = {
-    doctor: function (utterance) {
+    doctor: (utterance) => {
         // utterance.pitch = 0.8;
         utterance.voice = findVoice("en", "Google UK English Male");
 
-        utterance.addEventListener('start', function () {
+        utterance.addEventListener('start', () => {
             $('#doctor').show();
         });
-        utterance.addEventListener('end', function () {
+        utterance.addEventListener('end', () => {
             $('#doctor').hide();
         });
     },
-    patient: function (utterance) {
+    patient: (utterance) => {
         utterance.pitch = 0.6;
         utterance.voice = findVoice("en", "Google US English");
 
-        utterance.addEventListener('start', function () {
+        utterance.addEventListener('start', () => {
             $('#patient').show();
         });
-        utterance.addEventListener('end', function () {
+        utterance.addEventListener('end', () => {
             $('#patient').hide();
         });
     }
@@ -44,9 +44,7 @@ function makeUtterance({speaker, text}) {
 
 // create the global variable that stores all utterances. This is necessary to prevent garbage collection of the callbacks
 function buildUtterances(messages) {
-    window.utterances = $.map(messages, function (obj, i) {
-        return makeUtterance(obj);
-    });
+    window.utterances = $.map(messages, (obj) => { return makeUtterance(obj); });
 }
 
 function speechAvailable() {
@@ -73,7 +71,7 @@ function findVoice(langId, name) {
 
 // check every 500 ms to see if the speech list is available before building all the objects
 function waitForVoices(func_callback) {
-    setTimeout(function() {
+    setTimeout(() => {
         if (speechAvailable() && getVoices("en").length > 0) {
             logVoices();
             func_callback();
@@ -97,14 +95,14 @@ function pauseSpeechFor(millis) {
 
 // load the script from JSON, build the utterance list, and start them all reading
 function main() {
-    $.getJSON('./scripts/demo_script.json', function(data) {
+    $.getJSON('./scripts/chat_P4FXZN4PXA.json', (data) => {
         buildUtterances(data);
         speechSynthesis.resume();
-        $.each(window.utterances, function(i, utterance) { speechSynthesis.speak(utterance); });
+        $.each(window.utterances, (i, utterance) => { speechSynthesis.speak(utterance); });
     });
 }
 
 
-$('document').ready(function() {
+$('document').ready(() => {
     waitForVoices(() => { main(); });
 });
